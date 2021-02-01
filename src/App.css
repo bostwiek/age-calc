@@ -1,0 +1,21 @@
+body {
+  background-color: #111 !important;
+  color: #eee;
+}
+h1, h2, h3, h4, h5, h6, p, label {
+  color: #eee;
+}
+
+body .rdtPicker {
+  background: #111;
+  color: #fff;
+}
+
+thead tr:first-of-type th:hover,
+td.rdtMonth:hover, td.rdtYear:hover,
+.timezone-picker-textfield input,
+.rdtActive,
+.timezone-picker-selected .timezone-picker-textfield input {
+  background: #111 !important;
+  color: #fff !important;
+}

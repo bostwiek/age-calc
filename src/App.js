@@ -143,9 +143,7 @@ function App() {
           and {ageObj.seconds} seconds old
           
         </p>
-        <p>
-          
-        </p>
+        
       </Container>
     </Container>
   );
