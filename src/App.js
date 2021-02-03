@@ -27,6 +27,9 @@ start on 06 / 15 / 1990
 
 language support
 
+
+Currently date difference is not calculating properly, likely need to grab # of (seconds/minutes) between dates and calculate manually
+
 */
 
 function App() {
@@ -39,55 +42,43 @@ function App() {
     hours: 0,
     days: 0,
     months: 0,
-    years: 0
+		years: 0,
+		totalSeconds: 0,
+    totalMinutes: 0,
+    totalHours: 0,
+    totalDays: 0,
+    totalMonths: 0,
+		totalYears: 0,
   });
   
   const setAge = () => {
-
-    // setCurrentDate(new Date());
-
-    let seconds = currentDate.getSeconds() - date.getSeconds(),
-        minutes = currentDate.getMinutes() - date.getMinutes(),
-        hours = currentDate.getHours() - date.getHours(),
-        days = currentDate.getDate() - date.getDate(),
-        months = currentDate.getMonth() - date.getMonth(),
-        years = currentDate.getFullYear() - date.getFullYear();
-
-    if(days < 0) {
-      let monthTotal = 0;
-      // add # of days in month of birthday to negative number to find rollover value
-      // mess below determines number of days in current month
-      switch(date.getMonth()) {
-        case "1": // feb
-          monthTotal = date.getFullYear() % 4 == 0 ? 29 : 28;
-          break;
-        case "0": // jan, mar, may, jul, aug, oct, dec
-        case "2":
-        case "4":
-        case "6":
-        case "7":
-        case "9":
-        case "11":
-          monthTotal = 31;
-          break;
-        case "3": // apr, jun, sept, nov
-        case "5":
-        case "8":
-        case "10":
-          monthTotal = 30;
-          break;
-        default: // shouldn't ever hit default...
-          monthTotal = 30
-          break;
-      }
-      days += monthTotal;
-      months--;
-    }
-
-    if(months < 0) {
-      months += 12;
-      years--;
-    }
+		
+		let dateDiff = currentDate.getTime() - date.getTime(),
+				totalSeconds = dateDiff / 1000,
+				totalMinutes = totalSeconds / 60,
+				totalHours = totalMinutes / 60,
+				totalDays = totalHours / 24,
+				totalMonths = totalDays / 30.41666666,
+				totalYears = totalMonths / 12,
+				years = Math.floor(totalYears),
+				months = Math.floor(totalMonths),
+				days = Math.floor(totalDays),
+				hours = Math.floor(totalHours),
+				minutes = Math.floor(totalMinutes),
+				seconds = Math.floor(totalSeconds);
+		
+		alert('totalSeconds = ' + totalSeconds);
+		alert('totalMinutes = ' + totalMinutes);
+		alert('totalHours = ' + totalHours);
+		alert('totalDays = ' + totalDays);
+		alert('totalMonths = ' + totalMonths);
+		alert('totalYears = ' + totalYears);
+		alert('years = ' + years);
+		alert('months = ' + months);
+		alert('days = ' + days);
+		alert('hours = ' + hours);
+		alert('minutes = ' + minutes);
+		alert('seconds = ' + seconds);
 
     setAgeObj({
       seconds: seconds,
@@ -95,16 +86,21 @@ function App() {
       hours: hours,
       days: days,
       months: months,
-      years: years
+      years: years,
+			totalSeconds: totalSeconds,
+			totalMinutes: totalMinutes,
+			totalHours: totalHours,
+			totalDays: totalDays,
+			totalMonths: totalMonths,
+			totalYears: totalYears
     });
   }
-
-  // setTimeout(setAge, 1000);
   
   return (
     <Container fluid className="d-flex justify-content-md-center pt-5 pb-5 flex-column">
       <Container className="">
-        <h1>Enter your birth date:</h1>
+        
+				<h1>Enter your birth date:</h1>
         <Form.Group style={{ maxWidth: '300px' }}>
           <Datetime
             initialValue={date}
@@ -119,7 +115,7 @@ function App() {
           <TimezonePicker
             absolute = {false}
             defaultValue = "(GMT-07:00) Mountain Time"
-            placeholder = "Select timezone..."
+           	placeholder = "Select timezone..."
             onChange = {x => console.log(x)}
           />
         </Form.Group>
@@ -127,22 +123,14 @@ function App() {
       </Container>
       <Container>
         <p>
+          From {date.toUTCString()} to {currentDate.toUTCString()}
+          <br />
+					That's a total of...<br />
+					{Math.floor(ageObj.years)} years, {Math.floor(ageObj.months)} months, {Math.floor(ageObj.days)} days, {Math.floor(ageObj.hours)} hours, {Math.floor(ageObj.minutes)} minutes, and {Math.floor(ageObj.seconds)} seconds old.
+				</p>
+				<p>
 
-          from {date.toUTCString()} to {currentDate.toUTCString()}
-          <br />
-          You are {ageObj.years} years,
-          <br />
-          {ageObj.months} months,
-          <br />
-          {ageObj.days} days,
-          <br />
-          {ageObj.hours} hours ,
-          <br />
-          {ageObj.minutes} minutes,
-          <br />
-          and {ageObj.seconds} seconds old
-          
-        </p>
+				</p>
         
       </Container>
     </Container>
