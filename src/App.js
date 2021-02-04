@@ -53,32 +53,43 @@ function App() {
   
   const setAge = () => {
 		
+/*
+
+Y 31536000
+M (avg - 2628000) 31-2678400 30-2592000 29-2505600 28-2419200
+D 86400
+H 360
+M 60
+
+*/
+
 		let dateDiff = currentDate.getTime() - date.getTime(),
 				totalSeconds = dateDiff / 1000,
 				totalMinutes = totalSeconds / 60,
 				totalHours = totalMinutes / 60,
 				totalDays = totalHours / 24,
-				totalMonths = totalDays / 30.41666666,
+				totalMonths = totalDays / 30.41666666, // this is not 100% correct
 				totalYears = totalMonths / 12,
 				years = Math.floor(totalYears),
-				months = Math.floor(totalMonths),
-				days = Math.floor(totalDays),
-				hours = Math.floor(totalHours),
-				minutes = Math.floor(totalMinutes),
-				seconds = Math.floor(totalSeconds);
+				months = Math.floor(totalMonths) % 12,
+				days = Math.floor(totalDays) % 31, // this is rough since months !=
+				hours = Math.floor(totalHours) % 24,
+				minutes = Math.floor(totalMinutes) % 60,
+				seconds = Math.floor(totalSeconds) % 60;
+				
 		
-		alert('totalSeconds = ' + totalSeconds);
-		alert('totalMinutes = ' + totalMinutes);
-		alert('totalHours = ' + totalHours);
-		alert('totalDays = ' + totalDays);
-		alert('totalMonths = ' + totalMonths);
-		alert('totalYears = ' + totalYears);
-		alert('years = ' + years);
-		alert('months = ' + months);
-		alert('days = ' + days);
-		alert('hours = ' + hours);
-		alert('minutes = ' + minutes);
-		alert('seconds = ' + seconds);
+		// alert('totalSeconds = ' + totalSeconds);
+		// alert('totalMinutes = ' + totalMinutes);
+		// alert('totalHours = ' + totalHours);
+		// alert('totalDays = ' + totalDays);
+		// alert('totalMonths = ' + totalMonths);
+		// alert('totalYears = ' + totalYears);
+		// alert('years = ' + years);
+		// alert('months = ' + months);
+		// alert('days = ' + days);
+		// alert('hours = ' + hours);
+		// alert('minutes = ' + minutes);
+		// alert('seconds = ' + seconds);
 
     setAgeObj({
       seconds: seconds,
