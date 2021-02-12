@@ -14,23 +14,14 @@ import TimezonePicker from 'react-bootstrap-timezone-picker';
 
 Age calculator
 
-returns exact number of days, weeks, months, years, and fun facts
-fun facts = [who was born that day, what songs were released, what famous news happened within certain time]
-
-input needs = [birth date, switch for dd/mm/yyyy and mm/dd/yyyy determined from IP address]
-
-You were born [days] ago.
-
-[weeks] [months] [years]
-
 start on 06 / 15 / 1990
 
 language support
 
-
 Currently date difference is not calculating properly, likely need to grab # of (seconds/minutes) between dates and calculate manually
 
 */
+
 
 function App() {
   const [date, setDate] = useState(new Date(1988, 6, 30));
@@ -52,17 +43,6 @@ function App() {
   });
   
   const setAge = () => {
-		
-/*
-
-Y 31536000
-M (avg - 2628000) 31-2678400 30-2592000 29-2505600 28-2419200
-D 86400
-H 360
-M 60
-
-*/
-
 		let dateDiff = currentDate.getTime() - date.getTime(),
 				totalSeconds = dateDiff / 1000,
 				totalMinutes = totalSeconds / 60,
@@ -72,24 +52,10 @@ M 60
 				totalYears = totalMonths / 12,
 				years = Math.floor(totalYears),
 				months = Math.floor(totalMonths) % 12,
-				days = Math.floor(totalDays) % 31, // this is rough since months !=
+				days = Math.floor(totalDays) % 365, // this is rough since months !=
 				hours = Math.floor(totalHours) % 24,
 				minutes = Math.floor(totalMinutes) % 60,
 				seconds = Math.floor(totalSeconds) % 60;
-				
-		
-		// alert('totalSeconds = ' + totalSeconds);
-		// alert('totalMinutes = ' + totalMinutes);
-		// alert('totalHours = ' + totalHours);
-		// alert('totalDays = ' + totalDays);
-		// alert('totalMonths = ' + totalMonths);
-		// alert('totalYears = ' + totalYears);
-		// alert('years = ' + years);
-		// alert('months = ' + months);
-		// alert('days = ' + days);
-		// alert('hours = ' + hours);
-		// alert('minutes = ' + minutes);
-		// alert('seconds = ' + seconds);
 
     setAgeObj({
       seconds: seconds,
@@ -137,10 +103,16 @@ M 60
           From {date.toUTCString()} to {currentDate.toUTCString()}
           <br />
 					That's a total of...<br />
-					{Math.floor(ageObj.years)} years, {Math.floor(ageObj.months)} months, {Math.floor(ageObj.days)} days, {Math.floor(ageObj.hours)} hours, {Math.floor(ageObj.minutes)} minutes, and {Math.floor(ageObj.seconds)} seconds old.
+					{Math.floor(ageObj.years)} years, {Math.floor(ageObj.days)} days, {Math.floor(ageObj.hours)} hours, {Math.floor(ageObj.minutes)} minutes, and {Math.floor(ageObj.seconds)} seconds old.
 				</p>
 				<p>
-
+					Individually, that's...
+					<ul>
+						<li>{Math.floor(ageObj.totalDays).toLocaleString()} days</li>						
+						<li>{Math.floor(ageObj.totalHours).toLocaleString()} hours</li>
+						<li>{Math.floor(ageObj.totalMinutes).toLocaleString()} minutes</li>
+						<li>{Math.floor(ageObj.totalSeconds).toLocaleString()} seconds</li>
+					</ul>
 				</p>
         
       </Container>
